@@ -1,16 +1,8 @@
-{% extends "base.html" %}
-
-{% block content %}
-<h1>Generate Image</h1>
 <form method="post">
     {% csrf_token %}
     <div>
-        <label for="prompt">Enter your prompt:</label>
-        <textarea name="prompt" id="prompt" rows="6" cols="50" placeholder="Enter your prompt here" required></textarea>
-        <p class="prompt-hint">
-            <strong>Hint:</strong> Prompts can be composed of any words, but think about how you might explain an image to someone. The form of "subject + adjectives + styles" tends to work well.<br>
-            <em>Example: A polar bear, synthwave style, digital painting</em>
-        </p>
+        <label for="prompt">Enter your storyboard description:</label>
+        <textarea name="prompt" id="prompt" rows="4" cols="50" placeholder="Describe the character and the scenes you want in your storyboard..."></textarea>
     </div>
     <div>
         <label for="style">Choose a style:</label>
@@ -22,8 +14,12 @@
             <option value="infographic">Infographic</option>
             <option value="flat_design">Flat Design</option>
             <option value="minimalist">Minimalist</option>
+            <option value="storyboard">Storyboard Sequence</option>
         </select>
+    </div>
+    <div>
+        <label for="num_scenes">Number of scenes (for storyboard):</label>
+        <input type="number" name="num_scenes" id="num_scenes" min="1" max="6" value="4">
     </div>
     <button type="submit">Generate Image</button>
 </form>
-{% endblock %}
