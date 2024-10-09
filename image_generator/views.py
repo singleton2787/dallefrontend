@@ -15,15 +15,25 @@ def generate_image(request):
             api_key=settings.AZURE_OPENAI_API_KEY,
         )
 
-        full_prompt = f"{style} style: {prompt}"  # Fixed string literal
+        if style == 'storyboard':
+            num_images = int(request.POST.get('num_images', 2))  # Default to 2 if not provided
+            num_images = min(max(num_images, 2), 6)  # Ensure it's between 2 and 6
+            full_prompt = f"{prompt} and create a storyboard of {num_images} images with the same character or scene in different poses or situations"
+        elif style == 'custom':
+            custom_style = "and a seed of 8975398754985, the cinematic lighting and depth of field from a film noir, combined with the vibrant colors and features of a Disney film"
+            full_prompt = f"{prompt}, {custom_style}"
+        elif style == 'none':
+            full_prompt = prompt  # Use the prompt as-is without any style prefix
+        else:
+            full_prompt = f"{style} style: {prompt}"
 
         try:
             result = client.images.generate(
-                model="dall-e-2",
-                prompt=full_prompt,  # Use the full_prompt here
+                model="dall-e-3",
+                prompt=full_prompt,
                 n=1
             )
-
+            
             image_url = result.data[0].url  # Simplified access to image URL
             
             GeneratedImage.objects.create(prompt=full_prompt, image_url=image_url)

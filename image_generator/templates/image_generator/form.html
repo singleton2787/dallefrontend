@@ -8,13 +8,14 @@
         <label for="prompt">Enter your prompt:</label>
         <textarea name="prompt" id="prompt" rows="6" cols="50" placeholder="Enter your prompt here" required></textarea>
         <p class="prompt-hint">
-            <strong>Hint:</strong> Prompts can be composed of any words, but think about how you might explain an image to someone. The form of "subject + adjectives + styles" tends to work well.<br>
-            <em>Example: A polar bear, synthwave style, digital painting</em>
+            <strong>Hint:</strong> Describe the character or scene you want in your image.<br>
+            <em>Example: puppy with glasses</em>
         </p>
     </div>
     <div>
         <label for="style">Choose a style:</label>
-        <select name="style" id="style">
+        <select name="style" id="style" onchange="toggleNumImages()">
+            <option value="none">None</option>
             <option value="cartoon">Cartoon</option>
             <option value="disney">Disney Style</option>
             <option value="logo">Logo Design</option>
@@ -22,8 +23,29 @@
             <option value="infographic">Infographic</option>
             <option value="flat_design">Flat Design</option>
             <option value="minimalist">Minimalist</option>
+            <option value="storyboard">Storyboard</option>
+            <option value="custom">Custom</option>
+        </select>
+    </div>
+    <div id="num_images_container" style="display: none;">
+        <label for="num_images">Number of images in storyboard:</label>
+        <select name="num_images" id="num_images">
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            
         </select>
     </div>
     <button type="submit">Generate Image</button>
 </form>
+
+<script>
+function toggleNumImages() {
+    var style = document.getElementById('style').value;
+    var numImagesContainer = document.getElementById('num_images_container');
+    numImagesContainer.style.display = (style === 'storyboard') ? 'block' : 'none';
+}
+</script>
 {% endblock %}

@@ -4,5 +4,8 @@
 <h1>Generated Image</h1>
 <img src="{{ image_url }}" alt="Generated Image">
 <p>Prompt used: {{ prompt }}</p>
+{% if num_images %}
+<p>Number of images in storyboard: {{ num_images }}</p>
+{% endif %}
 <a href="{% url 'generate_image' %}">Generate Another Image</a>
 {% endblock %}
